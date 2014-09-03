@@ -34,12 +34,9 @@ public class ScenarioTestUnit implements TestUnit {
         ClassFinder classFinder = new ResourceLoaderClassFinder(resourceLoader, classLoader);
         RuntimeOptionsFactory runtimeOptionsFactory = new RuntimeOptionsFactory(junitTestClass, new Class[]{CucumberOptions.class, Cucumber.Options.class});
         RuntimeOptions runtimeOptions = runtimeOptionsFactory.create();
-        long start = System.currentTimeMillis();
         Runtime runtime = new Runtime(resourceLoader, classFinder, classLoader, runtimeOptions);
-        long end = System.currentTimeMillis();
         Formatter nullFormater = new FormatterFactory().create("null");
         Reporter reporter = new ReporterAdapter(rc, getDescription());
-        System.out.println("Prep needs " + (end-start) + "ms");
         scenario.run(nullFormater, reporter, runtime);
     }
 
