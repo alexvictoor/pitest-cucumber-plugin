@@ -9,6 +9,9 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This file is copy/pasted from cucumber-jvm java calculator example
+ */
 public class DateStepdefs {
     private String result;
     private DateCalculator calculator;

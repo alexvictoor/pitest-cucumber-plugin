@@ -2,6 +2,9 @@ package cucumber.examples.java.calculator;
 
 import java.util.Date;
 
+/**
+ * This file is copy/pasted from cucumber-jvm java calculator example
+ */
 public class DateCalculator {
 
     public static ThreadLocal<Boolean> failMode = new ThreadLocal<Boolean>();

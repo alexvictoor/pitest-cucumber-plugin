@@ -11,6 +11,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This file is copy/pasted from cucumber-jvm java calculator example
+ */
 public class RpnCalculatorStepdefs {
     private RpnCalculator calc;
 
