@@ -17,6 +17,7 @@ import gherkin.formatter.Reporter;
 import org.pitest.testapi.Description;
 import org.pitest.testapi.ResultCollector;
 import org.pitest.testapi.TestUnit;
+import org.pitest.util.Log;
 
 public class ScenarioTestUnit implements TestUnit {
 
@@ -39,6 +40,7 @@ public class ScenarioTestUnit implements TestUnit {
         Runtime runtime = new Runtime(resourceLoader, classFinder, classLoader, runtimeOptions);
         Formatter nullFormater = new FormatterFactory().create("null");
         Reporter reporter = new ReporterAdapter(rc, getDescription());
+        Log.getLogger().fine("Executing scenario " + scenario.getVisualName());
         scenario.run(nullFormater, reporter, runtime);
     }
 

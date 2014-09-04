@@ -5,6 +5,8 @@ import cucumber.runtime.Runtime;
 import cucumber.runtime.model.CucumberScenario;
 import gherkin.formatter.Formatter;
 import gherkin.formatter.Reporter;
+import gherkin.formatter.model.TagStatement;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -12,8 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.pitest.testapi.ResultCollector;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScenarioTestUnitTest {
@@ -23,6 +24,12 @@ public class ScenarioTestUnitTest {
 
     @Mock
     private ResultCollector resultCollector;
+
+    @Before
+    public void setUp() throws Exception {
+        TagStatement gherkin = mock(TagStatement.class);
+        when(scenario.getGherkinModel()).thenReturn(gherkin);
+    }
 
     @Test
     public void should_run_scenario_and_call_collector_when_ran() {
