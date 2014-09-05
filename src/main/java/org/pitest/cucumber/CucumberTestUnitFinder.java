@@ -28,17 +28,17 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
             ResourceLoader resourceLoader = new MultiLoader(classLoader);
             final List<CucumberFeature> cucumberFeatures = runtimeOptions.cucumberFeatures(resourceLoader);
             for (CucumberFeature feature : cucumberFeatures) {
-                Log.getLogger().fine("Found feature " + feature.getGherkinFeature().getName());
+                Log.getLogger().fine("Found feature \"" + feature.getGherkinFeature().getName() + "\"");
                 List<CucumberTagStatement> featureElements = feature.getFeatureElements();
                 for (CucumberTagStatement element : featureElements) {
                     if (element instanceof CucumberScenario) {
                         CucumberScenario scenario = (CucumberScenario) element;
-                        Log.getLogger().fine("Found scenario " + scenario.getVisualName());
+                        Log.getLogger().fine("Found \"" + scenario.getVisualName() + "\"");
                         ScenarioTestUnit testUnit = new ScenarioTestUnit(junitTestClass, scenario);
                         result.add(testUnit);
                     } else if (element instanceof CucumberScenarioOutline) {
                         CucumberScenarioOutline scenarioOutline = (CucumberScenarioOutline) element;
-                        Log.getLogger().fine("Found scenario with exnamples " + scenarioOutline.getVisualName());
+                        Log.getLogger().fine("Found \"" + scenarioOutline.getVisualName() + "\"");
                         for (CucumberExamples examples : scenarioOutline.getCucumberExamplesList()) {
                             for (CucumberScenario scenario : examples.createExampleScenarios()) {
                                 ScenarioTestUnit testUnit = new ScenarioTestUnit(junitTestClass, scenario);
@@ -47,7 +47,7 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
                         }
 
                     } else {
-                        // todo log
+                        Log.getLogger().warning("Ignoring unknown cucumber tag statement " + element.getVisualName());
                     }
                 }
             }
