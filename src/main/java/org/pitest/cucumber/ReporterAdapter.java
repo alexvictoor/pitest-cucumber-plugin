@@ -11,29 +11,31 @@ public class ReporterAdapter implements Reporter {
 
     private final ResultCollector rc;
     private final Description scenarioDescription;
+    private boolean closed;
 
     public ReporterAdapter(ResultCollector rc, Description scenarioDescription) {
         this.rc = rc;
         this.scenarioDescription = scenarioDescription;
+        rc.notifyStart(scenarioDescription);
     }
 
 
     public void before(Match match, Result result) {
-        rc.notifyStart(scenarioDescription);
     }
 
     public void result(Result result) {
+        if (closed) {
+            return;
+        }
         Throwable error = result.getError();
         if (error != null) {
             rc.notifyEnd(scenarioDescription, error);
-
-        } else if (result == Result.SKIPPED) {
+        } else if (result == Result.SKIPPED || result == Result.UNDEFINED) {
             rc.notifySkipped(scenarioDescription);
+            closed = true;
         } else {
             rc.notifyEnd(scenarioDescription);
         }
-
-
     }
 
     public void after(Match match, Result result) {

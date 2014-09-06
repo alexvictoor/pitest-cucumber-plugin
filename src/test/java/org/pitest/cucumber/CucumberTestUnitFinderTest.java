@@ -68,11 +68,12 @@ public class CucumberTestUnitFinderTest {
     private static class HideFromJUnit {
 
         @RunWith(Cucumber.class)
-        @CucumberOptions(features = "classpath:org/pitest/cucumber/shopping.feature")
+        @CucumberOptions(features = "classpath:cucumber/examples/java/calculator/shopping.feature")
         private static class Cornichon {
         }
 
         @RunWith(Cucumber.class)
+        @CucumberOptions(features = "classpath:")
         private static class Concombre {
         }
 
