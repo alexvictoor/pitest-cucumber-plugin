@@ -7,6 +7,33 @@
 	<name>pitest-cucumber-plugin</name>
 	<version>1.0-SNAPSHOT</version>
 
+    <scm>
+        <url>https://github.com/alexvictoor/pitest-cucumber-plugin</url>
+        <connection>scm:git:git@github.com:alexvictoor/pitest-cucumber-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:alexvictoor/pitest-cucumber-plugin.git</developerConnection>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
+    <issueManagement>
+        <url>https://github.com/alexvictoor/pitest-cucumber-plugin/issues</url>
+        <system>GitHub</system>
+    </issueManagement>
+
+    <developers>
+        <developer>
+            <id>alexvictoor</id>
+            <name>Alexandre Victoor</name>
+            <email>alexvictoor@gmail.com</email>
+        </developer>
+    </developers>
+
 	<properties>
 		<junit.version>4.11</junit.version>
 		<cucumber.version>1.1.8</cucumber.version>
