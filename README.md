@@ -36,7 +36,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 			</configuration>
 			<dependencies>
 				<dependency>
-					<groupId>org.pitest</groupId>
+					<groupId>org.victoor</groupId>
 					<artifactId>pitest-cucumber-plugin</artifactId>
 					<version>1.0-SNAPSHOT</version>
 				</dependency>
