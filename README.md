@@ -21,7 +21,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 		<plugin>
 			<groupId>org.pitest</groupId>
 			<artifactId>pitest-maven</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>1.1.0</version>
 			<configuration>
 				<targetClasses>
 					<param>your.sut.package.*</param>
@@ -46,3 +46,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 </build>
 
 ```
+
+Then as usual you just need to run pit using the following command:
+
+    mvn org.pitest:pitest-maven:mutationCoverage
