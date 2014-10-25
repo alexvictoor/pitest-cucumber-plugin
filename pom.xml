@@ -6,6 +6,8 @@
 	<artifactId>pitest-cucumber-plugin</artifactId>
 	<name>pitest-cucumber-plugin</name>
 	<version>1.0-SNAPSHOT</version>
+    <url>https://github.com/alexvictoor/pitest-cucumber-plugin</url>
+    <description>Cucumber PIT integration plugin</description>
 
     <scm>
         <url>https://github.com/alexvictoor/pitest-cucumber-plugin</url>
