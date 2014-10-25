@@ -9,7 +9,6 @@ The purpose of this plugin is to make PIT use your cucumber scenarios the same w
 Limitations
 ------------
 Today, PIT plugins require maven. You cannot for the moment use this plugin with the PIT command line interface or the [graddle plugin](https://github.com/szpak/gradle-pitest-plugin/issues/17).
-Today PIT 1.0.1 has not been released and hence you need to use a snapshot version of PIT.
 
 Usage
 ------
@@ -36,9 +35,9 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 			</configuration>
 			<dependencies>
 				<dependency>
-					<groupId>org.victoor</groupId>
+					<groupId>com.github.alexvictoor</groupId>
 					<artifactId>pitest-cucumber-plugin</artifactId>
-					<version>1.0-SNAPSHOT</version>
+					<version>0.1</version>
 				</dependency>
         	</dependencies>
 		</plugin>
@@ -50,3 +49,15 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 Then as usual you just need to run pit using the following command:
 
     mvn org.pitest:pitest-maven:mutationCoverage
+
+Troubleshooting
+-----------------
+Before raising an issue on github or in the PIT's users mailing-list, please try to run the analysis in verbose mode. You just need to add a verbise flag in the configuration section of the maven plugin:
+
+```xml
+<configuration>
+	...
+	<verbose>true</verbose>
+</configuration>
+```
+
