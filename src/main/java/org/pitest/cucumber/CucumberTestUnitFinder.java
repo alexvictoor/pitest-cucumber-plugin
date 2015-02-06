@@ -7,7 +7,11 @@ import cucumber.runtime.RuntimeOptions;
 import cucumber.runtime.RuntimeOptionsFactory;
 import cucumber.runtime.io.MultiLoader;
 import cucumber.runtime.io.ResourceLoader;
-import cucumber.runtime.model.*;
+import cucumber.runtime.model.CucumberExamples;
+import cucumber.runtime.model.CucumberFeature;
+import cucumber.runtime.model.CucumberScenario;
+import cucumber.runtime.model.CucumberScenarioOutline;
+import cucumber.runtime.model.CucumberTagStatement;
 import org.junit.runner.RunWith;
 import org.pitest.testapi.TestUnit;
 import org.pitest.testapi.TestUnitFinder;
@@ -22,7 +26,7 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
         List<TestUnit> result = new ArrayList<TestUnit>();
         RunWith annotation = junitTestClass.getAnnotation(RunWith.class);
         if (annotation!= null && Cucumber.class.equals(annotation.value())) {
-            RuntimeOptionsFactory runtimeOptionsFactory = new RuntimeOptionsFactory(junitTestClass, new Class[]{CucumberOptions.class, Cucumber.Options.class});
+            RuntimeOptionsFactory runtimeOptionsFactory = new RuntimeOptionsFactory(junitTestClass);
             RuntimeOptions runtimeOptions = runtimeOptionsFactory.create();
             ClassLoader classLoader = junitTestClass.getClassLoader();
             ResourceLoader resourceLoader = new MultiLoader(classLoader);
