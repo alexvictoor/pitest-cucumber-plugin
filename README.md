@@ -8,7 +8,7 @@ The purpose of this plugin is to make PIT use your cucumber scenarios the same w
 
 Limitations
 ------------
-Today, PIT plugins require maven. You cannot for the moment use this plugin with the PIT command line interface or the [gradle plugin](https://github.com/szpak/gradle-pitest-plugin/issues/17).
+Today, PIT plugins require maven or [Gradle](https://github.com/szpak/gradle-pitest-plugin). You cannot for the moment use this plugin with the PIT command line interface.
 
 Usage
 ------
