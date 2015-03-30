@@ -8,10 +8,12 @@ The purpose of this plugin is to make PIT use your cucumber scenarios the same w
 
 Limitations
 ------------
-Today, PIT plugins require maven. You cannot for the moment use this plugin with the PIT command line interface or the [gradle plugin](https://github.com/szpak/gradle-pitest-plugin/issues/17).
+Today, PIT plugins require maven or [Gradle](https://github.com/szpak/gradle-pitest-plugin). You cannot for the moment use this plugin with the PIT command line interface.
 
 Usage
 ------
+### Maven
+
 Just add this plugin as a maven dependency of PIT maven plugin. Below an example:
 
 ```xml
@@ -20,7 +22,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 		<plugin>
 			<groupId>org.pitest</groupId>
 			<artifactId>pitest-maven</artifactId>
-			<version>1.1.0</version>
+			<version>1.1.4</version>
 			<configuration>
 				<targetClasses>
 					<param>your.sut.package.*</param>
@@ -49,6 +51,28 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 Then as usual you just need to run pit using the following command:
 
     mvn org.pitest:pitest-maven:mutationCoverage
+
+### Gradle
+
+Just create `pitest` configuration and add this plugin as a dependency in a `buildscript` block in your root Gradle project. Below an example:
+```
+buildscript {
+   repositories {
+       mavenCentral()
+   }
+   configurations.maybeCreate("pitest")
+   dependencies {
+       classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.4'
+       pitest 'com.github.alexvictoor:pitest-cucumber-plugin:0.1'
+   }
+}
+```
+
+Then as usual you just need to run pit using the following command:
+
+    gradle pitest
+
+See [PIT plugin for Gradle README]( https://github.com/szpak/gradle-pitest-plugin) for more general configuration parameters.
 
 Troubleshooting
 -----------------
