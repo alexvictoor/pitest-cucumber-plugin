@@ -21,12 +21,12 @@ public class CucumberJUnitCompatibleConfiguration extends JUnitCompatibleConfigu
     public TestUnitFinder testUnitFinder() {
         final TestUnitFinder finder;
         if (isCucumberUsed()) {
-            Log.getLogger().info("Cucumber detected, scenarios will be used");
+            Log.getLogger().fine("Cucumber detected, scenarios will be used");
             List<TestUnitFinder> finders
                     = asList(new CucumberTestUnitFinder(), super.testUnitFinder());
             finder = new CompoundTestUnitFinder(finders);
         } else {
-            Log.getLogger().info("Cucumber not used in this project");
+            Log.getLogger().fine("Cucumber not used in this project");
             finder = super.testUnitFinder();
         }
         return finder;
