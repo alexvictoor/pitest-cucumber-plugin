@@ -39,7 +39,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 				<dependency>
 					<groupId>com.github.alexvictoor</groupId>
 					<artifactId>pitest-cucumber-plugin</artifactId>
-					<version>0.2</version>
+					<version>0.3</version>
 				</dependency>
         	</dependencies>
 		</plugin>
@@ -63,7 +63,7 @@ buildscript {
    configurations.maybeCreate("pitest")
    dependencies {
        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.4'
-       pitest 'com.github.alexvictoor:pitest-cucumber-plugin:0.2'
+       pitest 'com.github.alexvictoor:pitest-cucumber-plugin:0.3'
    }
 }
 ```
@@ -81,6 +81,8 @@ Compatibility Matrix
 |--------------------------------|------------------|
 | 0.1 | 1.1.8 |
 | 0.2 | 1.2.2 |
+| 0.3 | 1.2.2 |
+
 
 Troubleshooting
 -----------------
