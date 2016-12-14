@@ -48,7 +48,7 @@
     </developers>
 
 	<properties>
-		<junit.version>4.11</junit.version>
+		<junit.version>4.12</junit.version>
 		<cucumber.version>1.2.2</cucumber.version>
 		<pitest.version>1.1.11</pitest.version>
         <surefire.version>2.16</surefire.version>
