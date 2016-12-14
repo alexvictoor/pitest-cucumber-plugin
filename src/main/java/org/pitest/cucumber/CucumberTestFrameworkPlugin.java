@@ -5,14 +5,17 @@ import org.pitest.testapi.Configuration;
 import org.pitest.testapi.TestGroupConfig;
 import org.pitest.testapi.TestPluginFactory;
 
-public class CucumberTestFrameworkPlugin  implements TestPluginFactory {
+import java.util.Collection;
+
+public class CucumberTestFrameworkPlugin implements TestPluginFactory {
 
     public String description() {
         return "Cucumber with JUnit support";
     }
 
     public Configuration createTestFrameworkConfiguration(TestGroupConfig config,
-                                                          ClassByteArraySource source) {
+                                                          ClassByteArraySource source,
+                                                          Collection<String> excludedRunners) {
 
         return new CucumberJUnitCompatibleConfiguration(config);
     }
