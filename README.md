@@ -86,7 +86,7 @@ Compatibility Matrix
 
 Troubleshooting
 -----------------
-Before raising an issue on github or in the PIT's users mailing-list, please try to run the analysis in verbose mode. You just need to add a verbise flag in the configuration section of the maven plugin:
+Before raising an issue on github or in the PIT's users mailing-list, please try to run the analysis in verbose mode. You just need to add a verbose flag in the configuration section of the maven plugin:
 
 ```xml
 <configuration>
