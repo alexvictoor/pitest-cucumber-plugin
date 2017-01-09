@@ -7,6 +7,7 @@ import org.pitest.testapi.TestGroupConfig;
 import org.pitest.testapi.TestUnitFinder;
 import org.pitest.util.Log;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -14,7 +15,7 @@ import static java.util.Arrays.asList;
 public class CucumberJUnitCompatibleConfiguration extends JUnitCompatibleConfiguration {
 
     public CucumberJUnitCompatibleConfiguration(TestGroupConfig config) {
-        super(config);
+        super(config, Collections.<String>emptyList());
     }
 
     @Override
