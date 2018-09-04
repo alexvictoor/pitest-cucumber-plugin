@@ -37,7 +37,7 @@ public class ScenarioTestUnitTest {
         ScenarioTestUnit testUnit = new ScenarioTestUnit(HideFromJUnit.Concombre.class, scenario);
 
         // when
-        testUnit.execute(getClass().getClassLoader(), resultCollector);
+        testUnit.execute(resultCollector);
 
         // then
         verify(scenario, times(1)).run(any(Formatter.class), any(Reporter.class), any(Runtime.class));
