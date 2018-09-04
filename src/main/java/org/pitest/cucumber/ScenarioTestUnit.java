@@ -33,7 +33,18 @@ public class ScenarioTestUnit implements TestUnit {
         this.scenario = scenario;
     }
 
-    public void execute(ClassLoader classLoader, ResultCollector rc) {
+    private Formatter nullFormatter() {
+        return (Formatter) Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{Formatter.class}, new InvocationHandler() {
+            @Override
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                return null;
+            }
+        });
+    }
+
+    @Override
+    public void execute(ResultCollector rc) {
+        ClassLoader classLoader =  this.getClass().getClassLoader();
         ResourceLoader resourceLoader = new MultiLoader(classLoader);
 
         // TODO threadlocal runtime cache using junitTestClass as a key
@@ -44,15 +55,6 @@ public class ScenarioTestUnit implements TestUnit {
         Reporter reporter = new ReporterAdapter(rc, getDescription());
         LOGGER.fine("Executing cucumber \"" + scenario.getVisualName() + "\"");
         scenario.run(nullFormatter(), reporter, runtime);
-    }
-
-    private Formatter nullFormatter() {
-        return (Formatter) Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{Formatter.class}, new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                return null;
-            }
-        });
     }
 
     public Description getDescription() {
