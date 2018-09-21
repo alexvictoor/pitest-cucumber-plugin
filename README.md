@@ -22,7 +22,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 		<plugin>
 			<groupId>org.pitest</groupId>
 			<artifactId>pitest-maven</artifactId>
-			<version>1.4.3-SNAPSHOT</version>
+			<version>1.4.2</version>
 			<configuration>
 				<testPlugin>Cucumber</testPlugin>
 				<targetClasses>
