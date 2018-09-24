@@ -38,7 +38,7 @@ public class IntegrationTest {
         TestUnit firstTest = getScenarioTestUnit();
 
         // when
-        firstTest.execute(getClass().getClassLoader(), resultCollector);
+        firstTest.execute(resultCollector);
 
         // then
         Description description = firstTest.getDescription();
@@ -53,7 +53,7 @@ public class IntegrationTest {
         DateCalculator.failMode.set(true);
 
         // when
-        firstTest.execute(getClass().getClassLoader(), resultCollector);
+        firstTest.execute(resultCollector);
 
         // then
         Description description = firstTest.getDescription();
@@ -69,7 +69,7 @@ public class IntegrationTest {
         TestUnit firstTest = testUnits.get(0);
 
         // when
-        firstTest.execute(getClass().getClassLoader(), resultCollector);
+        firstTest.execute(resultCollector);
 
         // then
         Description description = firstTest.getDescription();

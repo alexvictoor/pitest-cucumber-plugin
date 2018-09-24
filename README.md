@@ -22,8 +22,9 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 		<plugin>
 			<groupId>org.pitest</groupId>
 			<artifactId>pitest-maven</artifactId>
-			<version>1.1.11</version>
+			<version>1.4.2</version>
 			<configuration>
+				<testPlugin>Cucumber</testPlugin>
 				<targetClasses>
 					<param>your.sut.package.*</param>
 				</targetClasses>
@@ -39,7 +40,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 				<dependency>
 					<groupId>com.github.alexvictoor</groupId>
 					<artifactId>pitest-cucumber-plugin</artifactId>
-					<version>0.4</version>
+					<version>0.5</version>
 				</dependency>
         	</dependencies>
 		</plugin>
@@ -63,7 +64,7 @@ buildscript {
    configurations.maybeCreate("pitest")
    dependencies {
        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.10'
-       pitest 'com.github.alexvictoor:pitest-cucumber-plugin:0.4'
+       pitest 'com.github.alexvictoor:pitest-cucumber-plugin:0.5'
    }
 }
 ```
@@ -79,11 +80,11 @@ Compatibility Matrix
 
 | Pitest Cucumber Plugin | tested against Cucumber | with Pitest Maven Plugin |
 |--------------------------------|------------------|-------------------------|
-| 0.1 | 1.1.8 | 1.1.5 |
-| 0.2 | 1.2.2 | 1.1.5 |
-| 0.3 | 1.2.2 | 1.1.5 |
+| 0.1 | 1.1.8 | 1.1.5  |
+| 0.2 | 1.2.2 | 1.1.5  |
+| 0.3 | 1.2.2 | 1.1.5  |
 | 0.4 | 1.2.2 | 1.1.11 |
-
+| 0.5 | 1.2.2 | 1.4.2  |
 
 Troubleshooting
 -----------------
