@@ -1,63 +1,42 @@
 package org.pitest.cucumber;
 
 
-import cucumber.runtime.ClassFinder;
+import cucumber.api.event.EventHandler;
+import cucumber.api.event.TestCaseFinished;
+import cucumber.runner.EventBus;
 import cucumber.runtime.Runtime;
-import cucumber.runtime.RuntimeOptions;
-import cucumber.runtime.RuntimeOptionsFactory;
-import cucumber.runtime.io.MultiLoader;
-import cucumber.runtime.io.ResourceLoader;
-import cucumber.runtime.io.ResourceLoaderClassFinder;
-import cucumber.runtime.model.CucumberScenario;
-import gherkin.formatter.Formatter;
-import gherkin.formatter.Reporter;
+import gherkin.events.PickleEvent;
 import org.pitest.testapi.Description;
 import org.pitest.testapi.ResultCollector;
 import org.pitest.testapi.TestUnit;
 import org.pitest.util.Log;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.logging.Logger;
 
 public class ScenarioTestUnit implements TestUnit {
 
     private static final Logger LOGGER = Log.getLogger();
-    private final CucumberScenario scenario;
+    private final PickleEvent scenario;
+    private final Runtime runtime;
 
-    private final Class<?> junitTestClass;
+    private final Description description;
 
-    public ScenarioTestUnit(Class<?> junitTestClass, CucumberScenario scenario) {
-        this.junitTestClass = junitTestClass;
+    public ScenarioTestUnit(Description description, PickleEvent scenario, Runtime runtime) {
+        this.description = description;
         this.scenario = scenario;
-    }
-
-    private Formatter nullFormatter() {
-        return (Formatter) Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{Formatter.class}, new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                return null;
-            }
-        });
+        this.runtime = runtime;
     }
 
     @Override
     public void execute(ResultCollector rc) {
-        ClassLoader classLoader =  this.getClass().getClassLoader();
-        ResourceLoader resourceLoader = new MultiLoader(classLoader);
-
-        // TODO threadlocal runtime cache using junitTestClass as a key
-        ClassFinder classFinder = new ResourceLoaderClassFinder(resourceLoader, classLoader);
-        RuntimeOptionsFactory runtimeOptionsFactory = new RuntimeOptionsFactory(junitTestClass);
-        RuntimeOptions runtimeOptions = runtimeOptionsFactory.create();
-        Runtime runtime = new Runtime(resourceLoader, classFinder, classLoader, runtimeOptions);
-        Reporter reporter = new ReporterAdapter(rc, getDescription());
-        LOGGER.fine("Executing cucumber \"" + scenario.getVisualName() + "\"");
-        scenario.run(nullFormatter(), reporter, runtime);
+        EventHandler<TestCaseFinished> handler = new ReporterAdapter(rc, getDescription());
+        LOGGER.fine("Executing cucumber \"" + description.getName() + "\"");
+        EventBus eventBus = runtime.getEventBus();
+        eventBus.registerHandlerFor(TestCaseFinished.class, handler);
+        runtime.getRunner().runPickle(scenario);
     }
 
     public Description getDescription() {
-        return new Description(scenario.getGherkinModel().getId(), junitTestClass);
+        return description;
     }
 }
