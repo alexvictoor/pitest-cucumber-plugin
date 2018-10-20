@@ -40,7 +40,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 				<dependency>
 					<groupId>com.github.alexvictoor</groupId>
 					<artifactId>pitest-cucumber-plugin</artifactId>
-					<version>0.5</version>
+					<version>0.6-SNAPSHOT</version>
 				</dependency>
         	</dependencies>
 		</plugin>
@@ -85,6 +85,7 @@ Compatibility Matrix
 | 0.3 | 1.2.2 | 1.1.5  |
 | 0.4 | 1.2.2 | 1.1.11 |
 | 0.5 | 1.2.2 | 1.4.2  |
+| 0.6-SNAPSHOT | 2.0.0 - 3.0.2 | 1.4.2  |
 
 Troubleshooting
 -----------------

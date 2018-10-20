@@ -5,20 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.runner.RunWith;
+import org.pitest.testapi.Description;
 import org.pitest.testapi.TestUnit;
 import org.pitest.testapi.TestUnitFinder;
 import org.pitest.util.Log;
 
 import cucumber.api.junit.Cucumber;
+import cucumber.runtime.ClassFinder;
+import cucumber.runtime.Runtime;
 import cucumber.runtime.RuntimeOptions;
 import cucumber.runtime.RuntimeOptionsFactory;
 import cucumber.runtime.io.MultiLoader;
 import cucumber.runtime.io.ResourceLoader;
-import cucumber.runtime.model.CucumberExamples;
+import cucumber.runtime.io.ResourceLoaderClassFinder;
 import cucumber.runtime.model.CucumberFeature;
-import cucumber.runtime.model.CucumberScenario;
-import cucumber.runtime.model.CucumberScenarioOutline;
-import cucumber.runtime.model.CucumberTagStatement;
+import gherkin.events.PickleEvent;
 
 public class CucumberTestUnitFinder implements TestUnitFinder {
 
@@ -30,32 +31,21 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
             RuntimeOptions runtimeOptions = runtimeOptionsFactory.create();
             ClassLoader classLoader = junitTestClass.getClassLoader();
             ResourceLoader resourceLoader = new MultiLoader(classLoader);
-            final List<CucumberFeature> cucumberFeatures = runtimeOptions.cucumberFeatures(resourceLoader);
+            ClassFinder classFinder = new ResourceLoaderClassFinder(resourceLoader, classLoader);
+            Runtime runtime = new Runtime(resourceLoader, classFinder, classLoader, runtimeOptions);
+            final List<CucumberFeature> cucumberFeatures = runtimeOptions.cucumberFeatures(resourceLoader, runtime.getEventBus());
             for (CucumberFeature feature : cucumberFeatures) {
-                Log.getLogger().fine("Found feature \"" + feature.getGherkinFeature().getName() + "\"");
-                List<CucumberTagStatement> featureElements = feature.getFeatureElements();
-                for (CucumberTagStatement element : featureElements) {
-                    if (element instanceof CucumberScenario) {
-                        CucumberScenario scenario = (CucumberScenario) element;
-                        Log.getLogger().fine("Found \"" + scenario.getVisualName() + "\"");
-                        ScenarioTestUnit testUnit = new ScenarioTestUnit(junitTestClass, scenario);
-                        result.add(testUnit);
-                    } else if (element instanceof CucumberScenarioOutline) {
-                        CucumberScenarioOutline scenarioOutline = (CucumberScenarioOutline) element;
-                        Log.getLogger().fine("Found \"" + scenarioOutline.getVisualName() + "\"");
-                        for (CucumberExamples examples : scenarioOutline.getCucumberExamplesList()) {
-                            for (CucumberScenario scenario : examples.createExampleScenarios()) {
-                                ScenarioTestUnit testUnit = new ScenarioTestUnit(junitTestClass, scenario);
-                                result.add(testUnit);
-                            }
-                        }
-
-                    } else {
-                        Log.getLogger().warning("Ignoring unknown cucumber tag statement " + element.getVisualName());
-                    }
-                }
-            }
-        }
-        return result;
-    }
+                Log.getLogger().fine("Found feature \"" + feature.getGherkinFeature().getFeature().getName() + "\"");
+                List<PickleEvent> pickles = runtime.compileFeature(feature);
+                for (PickleEvent pickle : pickles) {
+                    Description description = new Description(
+							feature.getGherkinFeature().getFeature().getName() + " : " + pickle.pickle.getName(),
+							junitTestClass);
+                    Log.getLogger().fine("Found \"" + description.getName() + "\"");
+                    result.add(new ScenarioTestUnit(description, pickle, runtime));
+				}
+			}
+		}
+		return result;
+	}
 }
