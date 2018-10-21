@@ -25,16 +25,16 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 	  <version>1.4.2</version>
 	  <configuration>
 	    <testPlugin>Cucumber</testPlugin>
-		<targetClasses>
-		  <param>your.sut.package.*</param>
-		</targetClasses>
-		<targetTests>
-		  <param>your.test.package.*Test</param>
-		</targetTests>
-		<outputFormats>
-          <outputFormat>XML</outputFormat>
-          <outputFormat>HTML</outputFormat>
-		</outputFormats>
+	    <targetClasses>
+	      <param>your.sut.package.*</param>
+	    </targetClasses>
+	    <targetTests>
+	      <param>your.test.package.*Test</param>
+	    </targetTests>
+	    <outputFormats>
+              <outputFormat>XML</outputFormat>
+              <outputFormat>HTML</outputFormat>
+	    </outputFormats>
 	  </configuration>
 	  <dependencies>
 	    <dependency>
