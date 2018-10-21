@@ -18,33 +18,33 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 
 ```xml
 <build>
-	<plugins>
-		<plugin>
-			<groupId>org.pitest</groupId>
-			<artifactId>pitest-maven</artifactId>
-			<version>1.4.2</version>
-			<configuration>
-				<testPlugin>Cucumber</testPlugin>
-				<targetClasses>
-					<param>your.sut.package.*</param>
-				</targetClasses>
-				<targetTests>
-					<param>your.test.package.*Test</param>
-				</targetTests>
-				<outputFormats>
-                    <outputFormat>XML</outputFormat>
-                    <outputFormat>HTML</outputFormat>
-				</outputFormats>
-			</configuration>
-			<dependencies>
-				<dependency>
-					<groupId>com.github.alexvictoor</groupId>
-					<artifactId>pitest-cucumber-plugin</artifactId>
-					<version>0.6-SNAPSHOT</version>
-				</dependency>
-        	</dependencies>
-		</plugin>
-	</plugins>
+  <plugins>
+    <plugin>
+	  <groupId>org.pitest</groupId>
+	  <artifactId>pitest-maven</artifactId>
+	  <version>1.4.2</version>
+	  <configuration>
+	    <testPlugin>Cucumber</testPlugin>
+		<targetClasses>
+		  <param>your.sut.package.*</param>
+		</targetClasses>
+		<targetTests>
+		  <param>your.test.package.*Test</param>
+		</targetTests>
+		<outputFormats>
+          <outputFormat>XML</outputFormat>
+          <outputFormat>HTML</outputFormat>
+		</outputFormats>
+	  </configuration>
+	  <dependencies>
+	    <dependency>
+		  <groupId>com.github.alexvictoor</groupId>
+		  <artifactId>pitest-cucumber-plugin</artifactId>
+		  <version>0.6</version>
+		</dependency>
+      </dependencies>
+	</plugin>
+  </plugins>
 </build>
 
 ```
@@ -85,7 +85,7 @@ Compatibility Matrix
 | 0.3 | 1.2.2 | 1.1.5  |
 | 0.4 | 1.2.2 | 1.1.11 |
 | 0.5 | 1.2.2 | 1.4.2  |
-| 0.6-SNAPSHOT | 2.0.0 - 3.0.2 | 1.4.2  |
+| 0.6 | 2.0.0 - 3.0.2 | 1.4.2  |
 
 Troubleshooting
 -----------------
@@ -98,3 +98,10 @@ Before raising an issue on github or in the PIT's users mailing-list, please try
 </configuration>
 ```
 
+If you are updating a project that was using pitest 1.1, be aware of the "testPlugin" config key in the maven configuration block:
+
+```xml
+<testPlugin>Cucumber</testPlugin> 
+```
+
+If you forget this one, the pitest cucumber plugin will not be used and no test will be run...
