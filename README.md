@@ -38,11 +38,11 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
 	  </configuration>
 	  <dependencies>
 	    <dependency>
-		  <groupId>com.github.alexvictoor</groupId>
-		  <artifactId>pitest-cucumber-plugin</artifactId>
-		  <version>0.6</version>
-		</dependency>
-      </dependencies>
+	      <groupId>com.github.alexvictoor</groupId>
+	      <artifactId>pitest-cucumber-plugin</artifactId>
+	      <version>0.6</version>
+	    </dependency>
+          </dependencies>
 	</plugin>
   </plugins>
 </build>
