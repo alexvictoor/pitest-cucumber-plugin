@@ -22,7 +22,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
     <plugin>
       <groupId>org.pitest</groupId>
       <artifactId>pitest-maven</artifactId>
-      <version>1.4.2</version>
+      <version>1.4.3</version>
       <configuration>
         <testPlugin>Cucumber</testPlugin>
 	<targetClasses>
@@ -86,7 +86,7 @@ Compatibility Matrix
 | 0.4 | 1.2.2 | 1.1.11 |
 | 0.5 | 1.2.2 | 1.4.2  |
 | 0.6 | 2.0.0 - 3.0.2 | 1.4.2  |
-| 0.7 | 4.0.0 - 4.2.0 | 1.4.2  |
+| 0.7 | 4.0.0 - 4.2.0 | 1.4.3  |
 
 Troubleshooting
 -----------------

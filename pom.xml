@@ -50,7 +50,7 @@
 	<properties>
 		<junit.version>4.12</junit.version>
 		<cucumber.version>4.2.0</cucumber.version>
-        	<pitest.version>1.4.2</pitest.version>
+        	<pitest.version>1.4.3</pitest.version>
         	<surefire.version>2.16</surefire.version>
 	</properties>
 
