@@ -3,9 +3,10 @@ package org.pitest.cucumber;
 import cucumber.api.junit.Cucumber;
 import cucumber.runner.EventBus;
 import cucumber.runner.Runner;
-import cucumber.runtime.Runtime;
+import cucumber.runner.RunnerSupplier;
+import cucumber.runtime.RuntimeOptions;
 import gherkin.events.PickleEvent;
-import org.junit.Before;
+import gherkin.pickles.Pickle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -13,42 +14,36 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.pitest.testapi.Description;
 import org.pitest.testapi.ResultCollector;
 
+import static java.util.Collections.emptyList;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScenarioTestUnitTest {
-
-    @Mock
-    PickleEvent scenario;
-
-    @Mock
-    Runtime runtime;
+	
+    Pickle pickle = new Pickle(null, null, emptyList(), null, emptyList());
     
-    @Mock
-    Runner runner;
-    
-    @Mock
-    EventBus eventBus;
+    PickleEvent scenario = new PickleEvent(null, pickle);
 
+    EventBus eventBus = mock(EventBus.class);
+
+    Runner runner = new Runner(eventBus, emptyList(), new RuntimeOptions(""));
+    	    
+    RunnerSupplier runnerSupplier = () -> { return runner; };
+    
     @Mock
     private ResultCollector resultCollector;
-
-    @Before
-    public void setUp() throws Exception {
-        when(runtime.getRunner()).thenReturn(runner);
-        when(runtime.getEventBus()).thenReturn(eventBus);
-    }
 
     @Test
     public void should_run_scenario_and_call_collector_when_ran() {
         // given
-        ScenarioTestUnit testUnit = new ScenarioTestUnit(new Description("", HideFromJUnit.Concombre.class), scenario, runtime);
+        ScenarioTestUnit testUnit = new ScenarioTestUnit(new Description("", HideFromJUnit.Concombre.class), scenario, runnerSupplier, eventBus);
 
         // when
         testUnit.execute(resultCollector);
 
         // then
-        verify(runner, times(1)).runPickle(scenario);
+        verify(eventBus, times(2)).send(any());
+        verify(resultCollector, times(1)).notifyStart(any());
     }
 
     private static class HideFromJUnit {
