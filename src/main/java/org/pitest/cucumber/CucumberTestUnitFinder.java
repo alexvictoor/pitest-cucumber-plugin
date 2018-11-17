@@ -11,14 +11,24 @@ import org.pitest.testapi.TestUnitFinder;
 import org.pitest.util.Log;
 
 import cucumber.api.junit.Cucumber;
+import cucumber.runner.EventBus;
+import cucumber.runner.RunnerSupplier;
+import cucumber.runner.SingletonRunnerSupplier;
+import cucumber.runner.TimeService;
+import cucumber.runner.TimeServiceEventBus;
+import cucumber.runtime.BackendModuleBackendSupplier;
+import cucumber.runtime.BackendSupplier;
 import cucumber.runtime.ClassFinder;
-import cucumber.runtime.Runtime;
+import cucumber.runtime.FeatureCompiler;
+import cucumber.runtime.FeaturePathFeatureSupplier;
+import cucumber.runtime.FeatureSupplier;
 import cucumber.runtime.RuntimeOptions;
 import cucumber.runtime.RuntimeOptionsFactory;
 import cucumber.runtime.io.MultiLoader;
 import cucumber.runtime.io.ResourceLoader;
 import cucumber.runtime.io.ResourceLoaderClassFinder;
 import cucumber.runtime.model.CucumberFeature;
+import cucumber.runtime.model.FeatureLoader;
 import gherkin.events.PickleEvent;
 
 public class CucumberTestUnitFinder implements TestUnitFinder {
@@ -32,17 +42,22 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
             ClassLoader classLoader = junitTestClass.getClassLoader();
             ResourceLoader resourceLoader = new MultiLoader(classLoader);
             ClassFinder classFinder = new ResourceLoaderClassFinder(resourceLoader, classLoader);
-            Runtime runtime = new Runtime(resourceLoader, classFinder, classLoader, runtimeOptions);
-            final List<CucumberFeature> cucumberFeatures = runtimeOptions.cucumberFeatures(resourceLoader, runtime.getEventBus());
+            FeatureLoader featureLoader = new FeatureLoader(resourceLoader);
+            FeatureSupplier featureSupplier = new FeaturePathFeatureSupplier(featureLoader, runtimeOptions);
+            final List<CucumberFeature> cucumberFeatures = featureSupplier.get();
+            FeatureCompiler compiler = new FeatureCompiler();
+            EventBus eventBus = new TimeServiceEventBus(TimeService.SYSTEM);
+            BackendSupplier backendSupplier = new BackendModuleBackendSupplier(resourceLoader, classFinder, runtimeOptions);
+            RunnerSupplier runnerSupplier = new SingletonRunnerSupplier(runtimeOptions, eventBus, backendSupplier);
             for (CucumberFeature feature : cucumberFeatures) {
                 Log.getLogger().fine("Found feature \"" + feature.getGherkinFeature().getFeature().getName() + "\"");
-                List<PickleEvent> pickles = runtime.compileFeature(feature);
+                List<PickleEvent> pickles = compiler.compileFeature(feature);
                 for (PickleEvent pickle : pickles) {
                     Description description = new Description(
 							feature.getGherkinFeature().getFeature().getName() + " : " + pickle.pickle.getName(),
 							junitTestClass);
                     Log.getLogger().fine("Found \"" + description.getName() + "\"");
-                    result.add(new ScenarioTestUnit(description, pickle, runtime));
+                    result.add(new ScenarioTestUnit(description, pickle, runnerSupplier, eventBus));
 				}
 			}
 		}
