@@ -24,6 +24,8 @@ import cucumber.runtime.FeaturePathFeatureSupplier;
 import cucumber.runtime.FeatureSupplier;
 import cucumber.runtime.RuntimeOptions;
 import cucumber.runtime.RuntimeOptionsFactory;
+import cucumber.runtime.filter.Filters;
+import cucumber.runtime.filter.RerunFilters;
 import cucumber.runtime.io.MultiLoader;
 import cucumber.runtime.io.ResourceLoader;
 import cucumber.runtime.io.ResourceLoaderClassFinder;
@@ -45,6 +47,8 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
             FeatureLoader featureLoader = new FeatureLoader(resourceLoader);
             FeatureSupplier featureSupplier = new FeaturePathFeatureSupplier(featureLoader, runtimeOptions);
             final List<CucumberFeature> cucumberFeatures = featureSupplier.get();
+            final RerunFilters rerunFilters = new RerunFilters(runtimeOptions, featureLoader);
+            final Filters filters = new Filters(runtimeOptions, rerunFilters);
             FeatureCompiler compiler = new FeatureCompiler();
             EventBus eventBus = new TimeServiceEventBus(TimeService.SYSTEM);
             BackendSupplier backendSupplier = new BackendModuleBackendSupplier(resourceLoader, classFinder, runtimeOptions);
@@ -53,6 +57,7 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
                 Log.getLogger().fine("Found feature \"" + feature.getGherkinFeature().getFeature().getName() + "\"");
                 List<PickleEvent> pickles = compiler.compileFeature(feature);
                 for (PickleEvent pickle : pickles) {
+                    if (!filters.matchesFilters(pickle)) continue;
                     Description description = new Description(
 							feature.getGherkinFeature().getFeature().getName() + " : " + pickle.pickle.getName(),
 							junitTestClass);
