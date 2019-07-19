@@ -4,9 +4,9 @@ import cucumber.api.junit.Cucumber;
 import cucumber.runner.EventBus;
 import cucumber.runner.Runner;
 import cucumber.runner.RunnerSupplier;
-import cucumber.runtime.RuntimeOptions;
 import gherkin.events.PickleEvent;
 import gherkin.pickles.Pickle;
+import io.cucumber.core.options.RuntimeOptions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -26,7 +26,7 @@ public class ScenarioTestUnitTest {
 
     EventBus eventBus = mock(EventBus.class);
 
-    Runner runner = new Runner(eventBus, emptyList(), new RuntimeOptions(""));
+    Runner runner = new Runner(eventBus, emptyList(), RuntimeOptions.defaultOptions());
     	    
     RunnerSupplier runnerSupplier = () -> { return runner; };
     
