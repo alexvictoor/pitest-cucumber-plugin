@@ -40,19 +40,19 @@ public class CucumberTestUnitFinderTest {
         assertThat(description.getFirstTestClass()).contains(HideFromJUnit.Cornichon.class.getSimpleName());
         assertThat(description.getName()).containsIgnoringCase("Shopping").containsIgnoringCase("change");
     }
-    
+
     @Test
     public void should_find_one_test_unit_for_one_feature_available_in_classpath_using_subclassed_runner() throws Exception {
-    	// given cucumber features in the classpath
-    	
-    	// when
-    	List<TestUnit> testUnits = finder.findTestUnits(HideFromJUnit.Pepino.class);
-    	
-    	// then
-    	assertThat(testUnits).hasSize(1);
-    	Description description = testUnits.get(0).getDescription();
-    	assertThat(description.getFirstTestClass()).contains(HideFromJUnit.Pepino.class.getSimpleName());
-    	assertThat(description.getName()).containsIgnoringCase("Shopping").containsIgnoringCase("change");
+        // given cucumber features in the classpath
+
+        // when
+        List<TestUnit> testUnits = finder.findTestUnits(HideFromJUnit.Pepino.class);
+
+        // then
+        assertThat(testUnits).hasSize(1);
+        Description description = testUnits.get(0).getDescription();
+        assertThat(description.getFirstTestClass()).contains(HideFromJUnit.Pepino.class.getSimpleName());
+        assertThat(description.getName()).containsIgnoringCase("Shopping").containsIgnoringCase("change");
     }
 
     @Test
@@ -89,16 +89,16 @@ public class CucumberTestUnitFinderTest {
         @CucumberOptions(features = "classpath:")
         private static class Concombre {
         }
-        
+
         @RunWith(Gurke.class)
         @CucumberOptions(features = "classpath:cucumber/examples/java/calculator/shopping.feature")
         private static class Pepino {
         }
-        
+
         private class Gurke extends Cucumber {
-			public Gurke(Class<?> clazz) throws InitializationError, IOException {
-				super(clazz);
-			}
+            public Gurke(Class<?> clazz) throws InitializationError, IOException {
+                super(clazz);
+            }
         }
 
     }

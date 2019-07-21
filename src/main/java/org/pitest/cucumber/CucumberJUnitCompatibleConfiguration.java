@@ -1,6 +1,5 @@
 package org.pitest.cucumber;
 
-
 import org.pitest.junit.CompoundTestUnitFinder;
 import org.pitest.junit.JUnitCompatibleConfiguration;
 import org.pitest.testapi.TestGroupConfig;
@@ -23,8 +22,7 @@ public class CucumberJUnitCompatibleConfiguration extends JUnitCompatibleConfigu
         final TestUnitFinder finder;
         if (isCucumberUsed()) {
             Log.getLogger().fine("Cucumber detected, scenarios will be used");
-            List<TestUnitFinder> finders
-                    = asList(new CucumberTestUnitFinder(), super.testUnitFinder());
+            List<TestUnitFinder> finders = asList(new CucumberTestUnitFinder(), super.testUnitFinder());
             finder = new CompoundTestUnitFinder(finders);
         } else {
             Log.getLogger().fine("Cucumber not used in this project");

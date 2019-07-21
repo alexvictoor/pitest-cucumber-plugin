@@ -1,6 +1,5 @@
 package org.pitest.cucumber;
 
-
 import cucumber.api.Result;
 import cucumber.api.event.EventHandler;
 import cucumber.api.event.TestCaseFinished;

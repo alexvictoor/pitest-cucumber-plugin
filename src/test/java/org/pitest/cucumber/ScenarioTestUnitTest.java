@@ -19,17 +19,19 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScenarioTestUnitTest {
-	
+
     Pickle pickle = new Pickle(null, null, emptyList(), null, emptyList());
-    
+
     PickleEvent scenario = new PickleEvent(null, pickle);
 
     EventBus eventBus = mock(EventBus.class);
 
     Runner runner = new Runner(eventBus, emptyList(), RuntimeOptions.defaultOptions());
-    	    
-    RunnerSupplier runnerSupplier = () -> { return runner; };
-    
+
+    RunnerSupplier runnerSupplier = () -> {
+        return runner;
+    };
+
     @Mock
     private ResultCollector resultCollector;
 

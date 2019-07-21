@@ -35,7 +35,7 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
     public List<TestUnit> findTestUnits(Class<?> junitTestClass) {
         List<TestUnit> result = new ArrayList<>();
         RunWith annotation = junitTestClass.getAnnotation(RunWith.class);
-        if (annotation!= null && Cucumber.class.isAssignableFrom(annotation.value())) {
+        if (annotation != null && Cucumber.class.isAssignableFrom(annotation.value())) {
             RuntimeOptions runtimeOptions = new CucumberOptionsAnnotationParser().parse(junitTestClass).build();
             ClassLoader classLoader = junitTestClass.getClassLoader();
             ResourceLoader resourceLoader = new MultiLoader(classLoader);
@@ -53,13 +53,13 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
                 for (PickleEvent pickle : pickles) {
                     if (!filters.matchesFilters(pickle)) continue;
                     Description description = new Description(
-							feature.getGherkinFeature().getFeature().getName() + " : " + pickle.pickle.getName(),
-							junitTestClass);
+                        feature.getGherkinFeature().getFeature().getName() + " : " + pickle.pickle.getName(),
+                        junitTestClass);
                     Log.getLogger().fine("Found \"" + description.getName() + "\"");
                     result.add(new ScenarioTestUnit(description, pickle, runnerSupplier, eventBus));
-				}
-			}
-		}
-		return result;
-	}
+                }
+            }
+        }
+        return result;
+    }
 }
