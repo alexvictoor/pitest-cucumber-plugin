@@ -1,6 +1,5 @@
 package org.pitest.cucumber;
 
-
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import cucumber.examples.java.calculator.Cornichon;
@@ -58,7 +57,7 @@ public class IntegrationTest {
         // then
         Description description = firstTest.getDescription();
         verify(resultCollector, times(1)).notifyStart(description);
-        verify(resultCollector, times(1)).notifyEnd(any(Description.class), any(Throwable.class));
+        verify(resultCollector, times(1)).notifyEnd(any(Description.class));
     }
 
     @Test
