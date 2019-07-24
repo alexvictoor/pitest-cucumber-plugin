@@ -4,9 +4,9 @@ import cucumber.api.junit.Cucumber;
 import cucumber.runner.EventBus;
 import cucumber.runner.Runner;
 import cucumber.runner.RunnerSupplier;
-import cucumber.runtime.RuntimeOptions;
 import gherkin.events.PickleEvent;
 import gherkin.pickles.Pickle;
+import io.cucumber.core.options.RuntimeOptions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -19,17 +19,19 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScenarioTestUnitTest {
-	
+
     Pickle pickle = new Pickle(null, null, emptyList(), null, emptyList());
-    
+
     PickleEvent scenario = new PickleEvent(null, pickle);
 
     EventBus eventBus = mock(EventBus.class);
 
-    Runner runner = new Runner(eventBus, emptyList(), new RuntimeOptions(""));
-    	    
-    RunnerSupplier runnerSupplier = () -> { return runner; };
-    
+    Runner runner = new Runner(eventBus, emptyList(), RuntimeOptions.defaultOptions());
+
+    RunnerSupplier runnerSupplier = () -> {
+        return runner;
+    };
+
     @Mock
     private ResultCollector resultCollector;
 
