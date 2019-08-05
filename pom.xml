@@ -6,7 +6,7 @@
     <groupId>com.github.alexvictoor</groupId>
     <artifactId>pitest-cucumber-plugin</artifactId>
     <name>pitest-cucumber-plugin</name>
-    <version>0.8</version>
+    <version>0.9</version>
     <url>https://github.com/alexvictoor/pitest-cucumber-plugin</url>
     <description>Cucumber PIT integration plugin</description>
 
@@ -50,7 +50,7 @@
 
     <properties>
         <junit.version>5.5.1</junit.version>
-        <cucumber.version>4.5.4</cucumber.version>
+        <cucumber.version>4.7.1</cucumber.version>
         <pitest.version>1.4.9</pitest.version>
         <surefire.version>2.22.2</surefire.version>
         <mockito.version>3.0.0</mockito.version>

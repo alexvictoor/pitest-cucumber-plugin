@@ -22,7 +22,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
     <plugin>
       <groupId>org.pitest</groupId>
       <artifactId>pitest-maven</artifactId>
-      <version>1.4.5</version>
+      <version>1.4.9</version>
       <configuration>
         <testPlugin>Cucumber</testPlugin>
 	<targetClasses>
@@ -40,7 +40,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
         <dependency>
 	  <groupId>com.github.alexvictoor</groupId>
 	  <artifactId>pitest-cucumber-plugin</artifactId>
-	  <version>0.8</version>
+	  <version>0.9</version>
 	</dependency>
       </dependencies>
     </plugin>
@@ -63,8 +63,8 @@ buildscript {
    }
    configurations.maybeCreate("pitest")
    dependencies {
-       classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.10'
-       pitest 'com.github.alexvictoor:pitest-cucumber-plugin:0.5'
+       classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.4.9'
+       pitest 'com.github.alexvictoor:pitest-cucumber-plugin:0.9'
    }
 }
 ```
@@ -78,17 +78,17 @@ See [PIT plugin for Gradle README]( https://github.com/szpak/gradle-pitest-plugi
 Compatibility Matrix
 --------------------
 
-| Pitest Cucumber Plugin | tested against Cucumber | with Pitest Maven Plugin |
-|--------------------------------|------------------|-------------------------|
-| 0.1 | 1.1.8 | 1.1.5  |
-| 0.2 | 1.2.2 | 1.1.5  |
-| 0.3 | 1.2.2 | 1.1.5  |
-| 0.4 | 1.2.2 | 1.1.11 |
-| 0.5 | 1.2.2 | 1.4.2  |
-| 0.6 | 2.0.0 - 3.0.2 | 1.4.2  |
-| 0.7 | 4.0.0 - 4.2.0 | 1.4.3  |
-| 0.8 | 4.2.0 | 1.4.5  |
-| ? | 4.5.4 | 1.4.9  |
+| Pitest Cucumber Plugin | tested against Cucumber | with Pitest Maven Plugin | notes |
+|------------------------|-------------------------|--------------------------|-------|
+| 0.1 | 1.1.8         | 1.1.5  | |
+| 0.2 | 1.2.2         | 1.1.5  | |
+| 0.3 | 1.2.2         | 1.1.5  | |
+| 0.4 | 1.2.2         | 1.1.11 | |
+| 0.5 | 1.2.2         | 1.4.2  | |
+| 0.6 | 2.0.0 - 3.0.2 | 1.4.2  | |
+| 0.7 | 4.0.0 - 4.2.0 | 1.4.3  | |
+| 0.8 | 4.2.0         | 1.4.5  | |
+| 0.9 | 4.5.4 - 4.7.1 | 1.4.9  | Using deprecated cucumber.api.junit.Cucumber and cucumber.api.CucumberOptions |
 
 Troubleshooting
 -----------------
