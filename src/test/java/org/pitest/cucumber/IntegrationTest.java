@@ -61,7 +61,7 @@ class IntegrationTest {
         // then
         Description description = firstTest.getDescription();
         verify(resultCollector, times(1)).notifyStart(description);
-        verify(resultCollector, times(1)).notifyEnd(any(Description.class));
+        verify(resultCollector, times(1)).notifyEnd(any(Description.class), any(Throwable.class));
     }
 
     @ParameterizedTest
