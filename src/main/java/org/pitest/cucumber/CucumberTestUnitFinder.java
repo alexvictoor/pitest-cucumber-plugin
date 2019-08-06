@@ -1,9 +1,12 @@
 package org.pitest.cucumber;
 
+import cucumber.api.SnippetType;
 import io.cucumber.core.options.CucumberOptionsAnnotationParser;
 import io.cucumber.core.options.RuntimeOptions;
 import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.runner.RunWith;
@@ -33,10 +36,16 @@ import gherkin.events.PickleEvent;
 public class CucumberTestUnitFinder implements TestUnitFinder {
 
     public List<TestUnit> findTestUnits(Class<?> junitTestClass) {
-        List<TestUnit> result = new ArrayList<>();
-        RunWith annotation = junitTestClass.getAnnotation(RunWith.class);
-        if (annotation != null && Cucumber.class.isAssignableFrom(annotation.value())) {
-            RuntimeOptions runtimeOptions = new CucumberOptionsAnnotationParser().parse(junitTestClass).build();
+
+        if (hasACucumberAnnotation(junitTestClass)) {
+
+            List<TestUnit> result = new ArrayList<>();
+
+            RuntimeOptions runtimeOptions = new CucumberOptionsAnnotationParser()
+                .withOptionsProvider(new CustomProvider())
+                .parse(junitTestClass)
+                .build();
+
             ClassLoader classLoader = junitTestClass.getClassLoader();
             ResourceLoader resourceLoader = new MultiLoader(classLoader);
             ClassFinder classFinder = new ResourceLoaderClassFinder(resourceLoader, classLoader);
@@ -59,7 +68,93 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
                     result.add(new ScenarioTestUnit(description, pickle, runnerSupplier, eventBus));
                 }
             }
+
+            return result;
+
         }
-        return result;
+
+        return Collections.emptyList();
+    }
+
+    private boolean hasACucumberAnnotation(Class<?> junitTestClass) {
+        RunWith annotation = junitTestClass.getAnnotation(RunWith.class);
+        return annotation != null && Cucumber.class.isAssignableFrom(annotation.value());
+    }
+
+    private class CustomProvider implements CucumberOptionsAnnotationParser.OptionsProvider {
+        @Override
+        public CucumberOptionsAnnotationParser.CucumberOptions getOptions(Class<?> clazz) {
+            // this is ok since up to Cucumber 4.7.1, il will fallback on cucumber.api.CucumberOptions
+            // @see io.cucumber.core.options.CucumberOptionsAnnotationParser (l.41)
+            final io.cucumber.junit.CucumberOptions annotation = clazz.getAnnotation(io.cucumber.junit.CucumberOptions.class);
+            if (annotation == null) {
+                return null;
+            }
+            return new CustomCucumberOptions(annotation);
+        }
+    }
+
+    private class CustomCucumberOptions implements CucumberOptionsAnnotationParser.CucumberOptions {
+        private final CucumberOptions annotation;
+
+        public CustomCucumberOptions(CucumberOptions annotation) {
+            this.annotation = annotation;
+        }
+
+        @Override
+        public boolean dryRun() {
+            return annotation.dryRun();
+        }
+
+        @Override
+        public boolean strict() {
+            return annotation.strict();
+        }
+
+        @Override
+        public String[] features() {
+            return annotation.features();
+        }
+
+        @Override
+        public String[] glue() {
+            return annotation.glue();
+        }
+
+        @Override
+        public String[] extraGlue() {
+            return annotation.extraGlue();
+        }
+
+        @Override
+        public String[] tags() {
+            return annotation.tags();
+        }
+
+        @Override
+        public String[] plugin() {
+            return annotation.plugin();
+        }
+
+        @Override
+        public boolean monochrome() {
+            return annotation.monochrome();
+        }
+
+        @Override
+        public String[] name() {
+            return annotation.name();
+        }
+
+        @Override
+        public SnippetType snippets() {
+            CucumberOptions.SnippetType snippets = annotation.snippets();
+            return SnippetType.fromString(snippets.name());
+        }
+
+        @Override
+        public String[] junit() {
+            return annotation.junit();
+        }
     }
 }
