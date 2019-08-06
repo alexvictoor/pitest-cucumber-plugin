@@ -6,15 +6,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import cucumber.api.junit.Cucumber;
+import io.cucumber.junit.Cucumber;
 import cucumber.runner.EventBus;
 import cucumber.runner.Runner;
 import cucumber.runner.RunnerSupplier;
 import gherkin.events.PickleEvent;
 import gherkin.pickles.Pickle;
 import io.cucumber.core.options.RuntimeOptions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -39,10 +40,11 @@ public class ScenarioTestUnitTest {
     @Mock
     private ResultCollector resultCollector;
 
-    @Test
-    public void should_run_scenario_and_call_collector_when_ran() {
+    @ParameterizedTest
+    @ValueSource( classes = { HideFromJUnit.DeprecatedConcombre.class, HideFromJUnit.Concombre.class } )
+    public void should_run_scenario_and_call_collector_when_ran(Class<?> clazz) {
         // given
-        ScenarioTestUnit testUnit = new ScenarioTestUnit(new Description("", HideFromJUnit.Concombre.class), scenario, runnerSupplier, eventBus);
+        ScenarioTestUnit testUnit = new ScenarioTestUnit(new Description("", clazz), scenario, runnerSupplier, eventBus);
 
         // when
         testUnit.execute(resultCollector);
@@ -56,6 +58,10 @@ public class ScenarioTestUnitTest {
 
         @RunWith(Cucumber.class)
         private static class Concombre {
+        }
+
+        @RunWith(cucumber.api.junit.Cucumber.class)
+        private static class DeprecatedConcombre {
         }
 
     }

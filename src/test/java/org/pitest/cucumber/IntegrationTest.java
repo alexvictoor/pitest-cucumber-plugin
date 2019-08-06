@@ -5,14 +5,16 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
 import cucumber.examples.java.calculator.Cornichon;
 import cucumber.examples.java.calculator.DateCalculator;
+import deprecated.cucumber.example.java.calculator.DeprecatedCornichon;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -31,10 +33,11 @@ class IntegrationTest {
         DateCalculator.failMode.set(null);
     }
 
-    @Test
-    void should_run_scenarios_successfully() {
+    @ParameterizedTest
+    @ValueSource( classes = { DeprecatedCornichon.class, Cornichon.class } )
+    void should_run_scenarios_successfully(Class<?> clazz) {
         // given
-        TestUnit firstTest = getScenarioTestUnit();
+        TestUnit firstTest = getScenarioTestUnit(clazz);
 
         // when
         firstTest.execute(resultCollector);
@@ -45,10 +48,11 @@ class IntegrationTest {
         verify(resultCollector, atLeastOnce()).notifyEnd(description);
     }
 
-    @Test
-    void should_detect_scenario_failure() {
+    @ParameterizedTest
+    @ValueSource( classes = { DeprecatedCornichon.class, Cornichon.class } )
+    void should_detect_scenario_failure(Class<?> clazz) {
         // given
-        TestUnit firstTest = getScenarioTestUnit();
+        TestUnit firstTest = getScenarioTestUnit(clazz);
         DateCalculator.failMode.set(true);
 
         // when
@@ -60,11 +64,12 @@ class IntegrationTest {
         verify(resultCollector, times(1)).notifyEnd(any(Description.class));
     }
 
-    @Test
-    void should_detect_skipped_scenario() {
+    @ParameterizedTest
+    @ValueSource( classes = { HideFromJUnit.DeprecatedCornichon.class, HideFromJUnit.Cornichon.class } )
+    void should_detect_skipped_scenario(Class<?> clazz) {
         // given
         CucumberTestUnitFinder finder = new CucumberTestUnitFinder();
-        List<TestUnit> testUnits = finder.findTestUnits(HideFromJUnit.Cornichon.class);
+        List<TestUnit> testUnits = finder.findTestUnits(clazz);
         TestUnit firstTest = testUnits.get(0);
 
         // when
@@ -76,9 +81,9 @@ class IntegrationTest {
         verify(resultCollector, times(1)).notifySkipped(description);
     }
 
-    private TestUnit getScenarioTestUnit() {
+    private TestUnit getScenarioTestUnit(Class<?> clazz) {
         CucumberTestUnitFinder finder = new CucumberTestUnitFinder();
-        List<TestUnit> testUnits = finder.findTestUnits(Cornichon.class);
+        List<TestUnit> testUnits = finder.findTestUnits(clazz);
         return testUnits.get(0);
     }
 
@@ -88,5 +93,11 @@ class IntegrationTest {
         @CucumberOptions(features = "classpath:cucumber/examples/java/calculator/date_calculator.feature")
         private static class Cornichon {
         }
+
+        @RunWith(cucumber.api.junit.Cucumber.class)
+        @cucumber.api.CucumberOptions(features = "classpath:cucumber/examples/java/calculator/date_calculator.feature")
+        private static class DeprecatedCornichon {
+        }
+
     }
 }

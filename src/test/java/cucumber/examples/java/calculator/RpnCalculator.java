@@ -1,10 +1,10 @@
 package cucumber.examples.java.calculator;
 
+import static java.util.Arrays.asList;
+
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
-
-import static java.util.Arrays.asList;
 
 /**
  * This file is copy/pasted from cucumber-jvm java calculator example

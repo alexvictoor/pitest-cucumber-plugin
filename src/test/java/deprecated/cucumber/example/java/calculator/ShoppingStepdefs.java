@@ -1,10 +1,11 @@
-package cucumber.examples.java.calculator;
+package deprecated.cucumber.example.java.calculator;
 
 import static org.junit.Assert.assertEquals;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import cucumber.examples.java.calculator.RpnCalculator;
 import java.util.List;
 
 /**

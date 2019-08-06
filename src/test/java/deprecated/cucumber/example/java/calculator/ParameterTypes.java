@@ -1,9 +1,9 @@
-package cucumber.examples.java.calculator;
+package deprecated.cucumber.example.java.calculator;
 
 import static java.util.Locale.ENGLISH;
 
-import io.cucumber.core.api.TypeRegistry;
-import io.cucumber.core.api.TypeRegistryConfigurer;
+import cucumber.api.TypeRegistry;
+import cucumber.api.TypeRegistryConfigurer;
 import io.cucumber.cucumberexpressions.ParameterByTypeTransformer;
 import io.cucumber.datatable.TableCellByTypeTransformer;
 import io.cucumber.datatable.TableEntryByTypeTransformer;
