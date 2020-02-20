@@ -6,7 +6,7 @@
     <groupId>com.github.alexvictoor</groupId>
     <artifactId>pitest-cucumber-plugin</artifactId>
     <name>pitest-cucumber-plugin</name>
-    <version>0.8</version>
+    <version>0.9-SNAPSHOT</version>
     <url>https://github.com/alexvictoor/pitest-cucumber-plugin</url>
     <description>Cucumber PIT integration plugin</description>
 
@@ -60,23 +60,26 @@
             <groupId>org.pitest</groupId>
             <artifactId>pitest</artifactId>
             <version>${pitest.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
             <version>${cucumber.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
