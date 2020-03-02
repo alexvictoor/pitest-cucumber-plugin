@@ -1,8 +1,9 @@
 package org.pitest.cucumber;
 
-import cucumber.api.Result;
-import cucumber.api.event.EventHandler;
-import cucumber.api.event.TestCaseFinished;
+import io.cucumber.plugin.event.EventHandler;
+import io.cucumber.plugin.event.Result;
+import io.cucumber.plugin.event.Status;
+import io.cucumber.plugin.event.TestCaseFinished;
 import org.pitest.testapi.Description;
 import org.pitest.testapi.ResultCollector;
 
@@ -24,11 +25,11 @@ public class ReporterAdapter implements EventHandler<TestCaseFinished> {
         if (closed) {
             return;
         }
-        Result result = ((TestCaseFinished) event).result;
+        Result result = event.getResult();
         Throwable error = result.getError();
         if (error != null) {
             rc.notifyEnd(scenarioDescription, error);
-        } else if (result.is(Result.Type.SKIPPED) || result.is(Result.Type.UNDEFINED)) {
+        } else if (result.getStatus().is(Status.SKIPPED) || result.getStatus().is(Status.UNDEFINED)) {
             rc.notifySkipped(scenarioDescription);
             closed = true;
         } else {

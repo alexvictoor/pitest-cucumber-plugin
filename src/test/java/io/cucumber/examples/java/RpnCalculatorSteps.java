@@ -1,20 +1,17 @@
-package deprecated.cucumber.example.java.calculator;
+package io.cucumber.examples.java;
 
-import static org.junit.Assert.assertEquals;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
-import cucumber.api.Scenario;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.examples.java.calculator.RpnCalculator;
 import java.util.List;
 
-/**
- * This file is copy/pasted from cucumber-jvm java calculator example
- */
-public class RpnCalculatorStepdefs {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class RpnCalculatorSteps {
     private RpnCalculator calc;
 
     @Given("a calculator I just turned on")
@@ -29,7 +26,7 @@ public class RpnCalculatorStepdefs {
         calc.push("+");
     }
 
-    @Given("I press (.+)")
+    @Given("^I press (.+)$")
     public void I_press(String what) {
         calc.push(what);
     }
@@ -46,7 +43,7 @@ public class RpnCalculatorStepdefs {
 
     @After
     public void after(Scenario scenario) {
-        // result.write("HELLLLOO");
+        // scenario.write("HELLLLOO");
     }
 
     @Given("the previous entries:")

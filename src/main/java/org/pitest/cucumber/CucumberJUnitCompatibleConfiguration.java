@@ -34,7 +34,7 @@ public class CucumberJUnitCompatibleConfiguration extends JUnitCompatibleConfigu
     private boolean isCucumberUsed() {
         boolean result = false;
         try {
-            Class.forName("cucumber.api.junit.Cucumber");
+            Class.forName("io.cucumber.junit.Cucumber");
             result = true;
         } catch (ClassNotFoundException e) {
         }

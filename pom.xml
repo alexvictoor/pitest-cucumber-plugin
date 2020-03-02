@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.alexvictoor</groupId>
+    <groupId>org.hjug</groupId>
     <artifactId>pitest-cucumber-plugin</artifactId>
     <name>pitest-cucumber-plugin</name>
-    <version>1.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <url>https://github.com/alexvictoor/pitest-cucumber-plugin</url>
     <description>Cucumber PIT integration plugin</description>
 
@@ -50,8 +50,8 @@
 
     <properties>
         <junit.version>5.5.1</junit.version>
-        <cucumber.version>4.7.1</cucumber.version>
-        <pitest.version>1.4.9</pitest.version>
+        <cucumber.version>5.3.0</cucumber.version>
+        <pitest.version>1.4.11</pitest.version>
         <surefire.version>2.22.2</surefire.version>
         <mockito.version>3.0.0</mockito.version>
     </properties>
@@ -61,17 +61,27 @@
             <groupId>org.pitest</groupId>
             <artifactId>pitest</artifactId>
             <version>${pitest.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
             <version>${cucumber.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.10.2</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
