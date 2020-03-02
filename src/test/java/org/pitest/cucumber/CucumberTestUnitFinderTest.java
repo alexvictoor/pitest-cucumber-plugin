@@ -1,34 +1,30 @@
 package org.pitest.cucumber;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
 import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.model.InitializationError;
 import org.mockito.MockitoAnnotations;
 import org.pitest.testapi.Description;
 import org.pitest.testapi.TestUnit;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
-
-public class CucumberTestUnitFinderTest {
+class CucumberTestUnitFinderTest {
 
     private CucumberTestUnitFinder finder;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void setup() {
         MockitoAnnotations.initMocks(this);
         this.finder = new CucumberTestUnitFinder();
     }
 
     @Test
-    public void should_find_one_test_unit_for_one_feature_available_in_classpath() throws Exception {
+    void should_find_one_test_unit_for_one_feature_available_in_classpath() {
         // given cucumber features in the classpath
 
         // when
@@ -42,7 +38,7 @@ public class CucumberTestUnitFinderTest {
     }
 
     @Test
-    public void should_find_one_test_unit_for_one_feature_available_in_classpath_using_subclassed_runner() throws Exception {
+    void should_find_one_test_unit_for_one_feature_available_in_classpath_using_subclassed_runner() {
         // given cucumber features in the classpath
 
         // when
@@ -56,7 +52,7 @@ public class CucumberTestUnitFinderTest {
     }
 
     @Test
-    public void should_find_as_many_test_units_as_features_and_examples_available_in_classpath() throws Exception {
+    void should_find_as_many_test_units_as_features_and_examples_available_in_classpath() {
         // given cucumber features in the classpath
 
         // when
@@ -67,7 +63,7 @@ public class CucumberTestUnitFinderTest {
     }
 
     @Test
-    public void should_find_no_test_units_on_a_standard_junit_test() {
+    void should_find_no_test_units_on_a_standard_junit_test() {
         // given this very test class
 
         // when
@@ -96,7 +92,7 @@ public class CucumberTestUnitFinderTest {
         }
 
         private class Gurke extends Cucumber {
-            public Gurke(Class<?> clazz) throws InitializationError, IOException {
+            public Gurke(Class<?> clazz) throws InitializationError {
                 super(clazz);
             }
         }
