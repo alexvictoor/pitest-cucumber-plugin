@@ -87,9 +87,8 @@ Compatibility Matrix
 | 0.5 | 1.2.2         | 1.4.2  | |
 | 0.6 | 2.0.0 - 3.0.2 | 1.4.2  | |
 | 0.7 | 4.0.0 - 4.2.0 | 1.4.3  | |
-| 0.8 | 4.2.0         | 1.4.5  | |
-| 0.9 | 4.5.4 - 4.7.1 | 1.4.9  | Using only deprecated cucumber.api.junit.Cucumber and cucumber.api.CucumberOptions                           |
-| 1.0 | 4.5.4 - 4.7.1 | 1.4.9  | Using both deprecated and new annotations (io.cucumber.junit.Cucumber and io.cucumber.junit.CucumberOptions) |
+| 0.8 | 4.2.0         | 1.4.5  | |                |
+| 0.9 | 4.5.4 - 4.7.1 | 1.4.9  | Using both deprecated and new annotations (io.cucumber.junit.Cucumber and io.cucumber.junit.CucumberOptions) |
 
 Troubleshooting
 -----------------
