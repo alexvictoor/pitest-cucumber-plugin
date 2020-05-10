@@ -3,12 +3,12 @@
 Cucumber PIT integration plugin
 ========================
 
-Out of the box [mutation testing tool PIT](http://pitest.org) does not take in account cucumber features and scenarios to kill mutants in your code.  
-The purpose of this plugin is to make PIT use your cucumber scenarios the same way it use already your regular junit tests.
+Out of the box, the mutation testing tool [Pitest](http://pitest.org) does not run cucumber features and scenarios to kill mutants in your code.  
+This plugin enables PIT to run cucumber scenarios the same way it runs your regular junit tests.
 
 Limitations
 ------------
-Today, PIT plugins require maven or [Gradle](https://github.com/szpak/gradle-pitest-plugin). You cannot for the moment use this plugin with the PIT command line interface.
+Today, PIT plugins require maven or [Gradle](https://github.com/szpak/gradle-pitest-plugin). This plugin does not currently work with the PIT command line interface.
 
 Usage
 ------
@@ -22,7 +22,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
     <plugin>
       <groupId>org.pitest</groupId>
       <artifactId>pitest-maven</artifactId>
-      <version>1.4.9</version>
+      <version>1.5.1</version>
       <configuration>
         <testPlugin>Cucumber</testPlugin>
     <targetClasses>
@@ -40,7 +40,7 @@ Just add this plugin as a maven dependency of PIT maven plugin. Below an example
         <dependency>
       <groupId>com.github.alexvictoor</groupId>
       <artifactId>pitest-cucumber-plugin</artifactId>
-      <version>1.0</version>
+      <version>0.10.0</version>
     </dependency>
       </dependencies>
     </plugin>
@@ -88,7 +88,8 @@ Compatibility Matrix
 | 0.6 | 2.0.0 - 3.0.2 | 1.4.2  | |
 | 0.7 | 4.0.0 - 4.2.0 | 1.4.3  | |
 | 0.8 | 4.2.0         | 1.4.5  | |                |
-| 0.9 | 4.5.4 - 4.7.1 | 1.4.9  | Using both deprecated and new annotations (io.cucumber.junit.Cucumber and io.cucumber.junit.CucumberOptions) |
+| 0.9 | 5.1.0 - 5.7.0 | 1.4.2 - 1.4.11  | Using both deprecated and new annotations (io.cucumber.junit.Cucumber and io.cucumber.junit.CucumberOptions) |
+| 0.10 | 5.1.0 - 5.7.0 | 1.5.0 - 1.5.1  | Using both deprecated and new annotations (io.cucumber.junit.Cucumber and io.cucumber.junit.CucumberOptions) |
 
 Troubleshooting
 -----------------
