@@ -6,6 +6,8 @@ Cucumber PIT integration plugin
 Out of the box, the mutation testing tool [Pitest](http://pitest.org) does not run cucumber features and scenarios to kill mutants in your code.  
 This plugin enables PIT to run cucumber scenarios the same way it runs your regular junit tests.
 
+![Mutant cucumber!](https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Mutant_cucumber.jpg/180px-Mutant_cucumber.jpg)
+
 Limitations
 ------------
 Today, PIT plugins require maven or [Gradle](https://github.com/szpak/gradle-pitest-plugin). This plugin does not currently work with the PIT command line interface.
