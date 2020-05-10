@@ -1,11 +1,11 @@
 package org.pitest.cucumber;
 
 
-import cucumber.api.event.EventHandler;
-import cucumber.api.event.TestCaseFinished;
-import cucumber.runner.EventBus;
-import cucumber.runner.RunnerSupplier;
-import gherkin.events.PickleEvent;
+import io.cucumber.core.eventbus.EventBus;
+import io.cucumber.core.gherkin.Pickle;
+import io.cucumber.core.runtime.RunnerSupplier;
+import io.cucumber.plugin.event.EventHandler;
+import io.cucumber.plugin.event.TestCaseFinished;
 import org.pitest.testapi.Description;
 import org.pitest.testapi.ResultCollector;
 import org.pitest.testapi.TestUnit;
@@ -16,13 +16,13 @@ import java.util.logging.Logger;
 public class ScenarioTestUnit implements TestUnit {
 
     private static final Logger LOGGER = Log.getLogger();
-    private final PickleEvent scenario;
+    private final Pickle scenario;
     private final RunnerSupplier runnerSupplier;
     private final EventBus eventBus;
 
     private final Description description;
 
-    public ScenarioTestUnit(Description description, PickleEvent scenario, RunnerSupplier runnerSupplier, EventBus eventBus) {
+    public ScenarioTestUnit(Description description, Pickle scenario, RunnerSupplier runnerSupplier, EventBus eventBus) {
         this.description = description;
         this.scenario = scenario;
         this.runnerSupplier = runnerSupplier;
