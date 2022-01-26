@@ -1,19 +1,12 @@
 package org.pitest.cucumber;
 
-import static java.util.Collections.emptyList;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
-import io.cucumber.core.api.TypeRegistry;
-import io.cucumber.core.api.TypeRegistryConfigurer;
 import io.cucumber.core.backend.ObjectFactory;
 import io.cucumber.core.eventbus.EventBus;
 import io.cucumber.core.gherkin.Pickle;
-import io.cucumber.core.internal.gherkin.events.PickleEvent;
+import io.cucumber.core.options.RuntimeOptions;
 import io.cucumber.core.runner.Runner;
 import io.cucumber.core.runtime.RunnerSupplier;
 import io.cucumber.junit.Cucumber;
-import io.cucumber.core.options.RuntimeOptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,6 +19,14 @@ import org.pitest.testapi.ResultCollector;
 
 import java.time.Instant;
 import java.util.Locale;
+import java.util.UUID;
+
+import static java.util.Collections.emptyList;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ScenarioTestUnitTest {
@@ -57,19 +58,7 @@ public class ScenarioTestUnitTest {
         }
     };
 
-    TypeRegistryConfigurer typeRegistryConfigurer = new TypeRegistryConfigurer() {
-        @Override
-        public Locale locale() {
-            return Locale.ENGLISH;
-        }
-
-        @Override
-        public void configureTypeRegistry(io.cucumber.core.api.TypeRegistry typeRegistry) {
-            //noop
-        }
-    };
-
-    Runner runner = new Runner(eventBus, emptyList(), objectFactory, typeRegistryConfigurer, RuntimeOptions.defaultOptions());
+    Runner runner = new Runner(eventBus, emptyList(), objectFactory, RuntimeOptions.defaultOptions());
 
     RunnerSupplier runnerSupplier = () -> runner;
 
@@ -78,7 +67,11 @@ public class ScenarioTestUnitTest {
 
     @BeforeEach
     public void setUp() {
+
+        when(pickle.getLanguage()).thenReturn("English");
+        when(eventBus.generateId()).thenReturn(UUID.randomUUID());
         when(eventBus.getInstant()).thenReturn(Instant.now());
+
     }
 
     @ParameterizedTest
