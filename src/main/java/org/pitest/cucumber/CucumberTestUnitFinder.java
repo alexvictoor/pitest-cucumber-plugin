@@ -30,6 +30,7 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
     public List<TestUnit> findTestUnits(Class<?> junitTestClass) {
 
         if (hasACucumberAnnotation(junitTestClass)) {
+//            System.err.println("found cuce test "+junitTestClass.getName());
 
             List<TestUnit> result = new ArrayList<>();
 
@@ -45,11 +46,10 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
             final List<Feature> cucumberFeatures = featureSupplier.get();
             final Filters filters = new Filters(runtimeOptions);
             EventBus eventBus = new TimeServiceEventBus(Clock.systemUTC(), UUID::randomUUID);
-            ObjectFactoryServiceLoader objectFactoryServiceLoader = new ObjectFactoryServiceLoader(runtimeOptions);
+            ObjectFactoryServiceLoader objectFactoryServiceLoader = new ObjectFactoryServiceLoader(junitTestClass::getClassLoader,runtimeOptions);
             ObjectFactorySupplier objectFactorySupplier = new ThreadLocalObjectFactorySupplier(objectFactoryServiceLoader);
             BackendSupplier backendSupplier = new BackendServiceLoader(junitTestClass::getClassLoader, objectFactorySupplier);
-            TypeRegistryConfigurerSupplier typeRegistryConfigurerSupplier = new ScanningTypeRegistryConfigurerSupplier(junitTestClass::getClassLoader, runtimeOptions);
-            RunnerSupplier runnerSupplier = new SingletonRunnerSupplier(runtimeOptions, eventBus, backendSupplier, objectFactorySupplier, typeRegistryConfigurerSupplier);
+            RunnerSupplier runnerSupplier = new SingletonRunnerSupplier(runtimeOptions, eventBus, backendSupplier, objectFactorySupplier );
             for (Feature feature : cucumberFeatures) {
                 Log.getLogger().fine("Found feature \"" + feature.getName() + "\"");
                 List<Pickle> pickles = feature.getPickles();
@@ -62,6 +62,7 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
                     result.add(new ScenarioTestUnit(description, pickle, runnerSupplier, eventBus));
                 }
             }
+//            System.err.println(" --- res "+result.toString());
 
             return result;
 
@@ -100,10 +101,6 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
             return annotation.dryRun();
         }
 
-        @Override
-        public boolean strict() {
-            return annotation.strict();
-        }
 
         @Override
         public String[] features() {
@@ -121,13 +118,18 @@ public class CucumberTestUnitFinder implements TestUnitFinder {
         }
 
         @Override
-        public String[] tags() {
+        public String tags() {
             return annotation.tags();
         }
 
         @Override
         public String[] plugin() {
             return annotation.plugin();
+        }
+
+        @Override
+        public boolean publish() {
+            return annotation.publish();
         }
 
         @Override
